@@ -1,0 +1,191 @@
+# depslib dependency file v1.0
+1683135239 source:d:\itne\game\mycat\src\texture.cpp
+	"Texture.h"
+
+1683107297 d:\itne\game\mycat\include\texture.h
+	<iostream>
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	"../const.h"
+	"Gallery.h"
+	"Game.h"
+	"Button.h"
+	"Text.h"
+	"Shop.h"
+
+1683083966 d:\itne\game\mycat\const.h
+
+1683173149 source:d:\itne\game\mycat\main.cpp
+	<iostream>
+	<iostream>
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<vector>
+	<ctime>
+	<map>
+	"Texture.h"
+	"Button.h"
+	"Text.h"
+	"Algorithm.h"
+	"LTime.h"
+	"Game.h"
+	"Shop.h"
+
+1682696280 d:\itne\game\mycat\include\gallery.h
+	<iostream>
+	<iostream>
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<map>
+	<vector>
+
+1683118265 source:d:\itne\game\mycat\src\gallery.cpp
+	"Gallery.h"
+
+1683041600 source:d:\itne\game\mycat\src\button.cpp
+	"Button.h"
+
+1682736284 d:\itne\game\mycat\include\button.h
+	<iostream>
+	<iostream>
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	"../const.h"
+
+1683106159 source:d:\itne\game\mycat\src\text.cpp
+	"Text.h"
+
+1683106159 d:\itne\game\mycat\include\text.h
+	<iostream>
+	<iostream>
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<map>
+
+1683173023 source:d:\itne\game\mycat\src\game.cpp
+	"Game.h"
+
+1683172743 d:\itne\game\mycat\include\game.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<vector>
+	<ctime>
+	<algorithm>
+	"../const.h"
+	"Cell.h"
+	"Cat.h"
+	"LTime.h"
+	"Algorithm.h"
+	"House.h"
+	"gameFunc.h"
+
+1682926337 source:d:\itne\game\mycat\src\algorithm.cpp
+	"Algorithm.h"
+
+1682910870 d:\itne\game\mycat\include\algorithm.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<vector>
+	<ctime>
+	<algorithm>
+	"../const.h"
+	"Cell.h"
+	"gameFunc.h"
+	"Cat.h"
+
+1682342890 d:\itne\game\mycat\include\cell.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<SDL_ttf.h>
+	<cmath>
+	"../const.h"
+
+1682216911 source:d:\itne\game\mycat\src\cell.cpp
+	"Cell.h"
+
+1683133707 source:d:\itne\game\mycat\src\cat.cpp
+	"Cat.h"
+
+1683133707 d:\itne\game\mycat\include\cat.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<SDL_ttf.h>
+	<cmath>
+	"gameFunc.h"
+
+1682317872 source:d:\itne\game\mycat\src\time.cpp
+	"Time.h"
+
+1682317947 d:\itne\game\mycat\include\time.h
+	<iostream>
+	<string>
+	<SDL.h>
+
+1682495974 source:d:\itne\game\mycat\src\ltime.cpp
+	"LTime.h"
+
+1682912173 d:\itne\game\mycat\include\ltime.h
+	<iostream>
+	<string>
+	<SDL.h>
+
+1682782580 source:d:\itne\game\mycat\src\house.cpp
+	"House.h"
+
+1682782703 d:\itne\game\mycat\include\house.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<vector>
+	<ctime>
+	<algorithm>
+	"../const.h"
+	"Cell.h"
+
+1682925622 d:\itne\game\mycat\include\gamefunc.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<vector>
+	<ctime>
+	<algorithm>
+	"../const.h"
+
+1682925751 source:d:\itne\game\mycat\src\gamefunc.cpp
+	"gameFunc.h"
+
+1683104296 source:d:\itne\game\mycat\src\shop.cpp
+	"Shop.h"
+
+1683104146 d:\itne\game\mycat\include\shop.h
+	<iostream>
+	<iostream>
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<vector>
+	<ctime>
+	"Game.h"
+	"../const.h"
+
