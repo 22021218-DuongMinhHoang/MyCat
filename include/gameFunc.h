@@ -19,6 +19,6 @@ int turnToY(int celly);
 int randomNumber(int minnum,int maxnum);
 
 bool isHighPlace(int cellx,int celly);
-
+//vailoi
 bool isPlaceNeedJump(int cellx,int celly);
 #endif // GAMEFUNC_H
