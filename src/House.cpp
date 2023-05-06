@@ -8,7 +8,6 @@ House::House()
         vector<Cell> vt;
         for(int x = 0; x< NUM_OF_CELL_X; x++)
         {
-
             Cell c;
             c.setCellxy(x,y);
             c.setPos();

@@ -24,9 +24,9 @@ void Game::catMoreFull(int n)
 void Game::catGetHungry()
 {
     Uint32 timer = SDL_GetTicks();
-    if((timer/1000)%2==0 && timer - timeHungry >= 2000 && !myCat.getIsFull() && myCat.getCatMove()!=CAT_MOVE_SLEEP)
+    if(timer - timeHungry >= 2000 && !myCat.getIsFull() && myCat.getCatMove()!=CAT_MOVE_SLEEP)
     {
-        myCat.moreFull(-1);
+        myCat.moreFull(-3);
         timeHungry = timer;
         if(myCat.getFull()<=0) myCat.moreHealth(myCat.getFull()*2);
     }
@@ -41,7 +41,7 @@ void Game::catWantPoo()
     {
         myCat.morePoo(1);
         timeFeelPoo = timer;
-        if(myCat.getPoo()>=50) myCat.moreHealth(-myCat.getPoo()/10);
+        if(myCat.getPoo()>=80) myCat.moreHealth(-myCat.getPoo()/10);
     }
     if(myCat.getPoo()>=20 && !isMoving){ gCat = GAME_CAT_GOTOPOO;}
 
@@ -76,7 +76,7 @@ void Game::catGoToCell()
                     break;
                 }
             case GAME_CAT_GOTOSLEEP:
-
+                frametime = SDL_GetTicks();
                 myCat.setCatMove(CAT_MOVE_SLEEP);
                 break;
             }
@@ -91,12 +91,12 @@ void Game::catEat()
         int timer = SDL_GetTicks();
         if(bowlIsFull)
         {
-            if(motionStop==0) {motionStop = timer;frame=0;}
+            if(motionStop==0) {motionStop = timer;frame=0;frametime = SDL_GetTicks();}
             else if(motionStop!=0 && timer - motionStop >= 2400)
             {
-                myCat.setFull(100);
-                myCat.moreHealth(20);
-                myCat.moreLove(10);
+                myCat.setFull(150);
+                myCat.moreHealth(10);
+                myCat.moreLove(5);
 
                 myCat.setIsFull(true);
                 setBowlIsFull(false);
@@ -120,11 +120,11 @@ void Game::catPoo()
         int timer = SDL_GetTicks();
         if(shitInBox<=5)
         {
-            if(motionStop==0) {motionStop = timer;frame=0;}
+            if(motionStop==0) {motionStop = timer;frame=0;frametime = SDL_GetTicks();}
             else if(motionStop!=0 && timer - motionStop >= 2400)
             {
                 myCat.setPoo(0);
-                myCat.moreHealth(10);
+                myCat.moreHealth(5);
 
                 myCat.setIsFull(false);
                 shitInBox++;
@@ -156,6 +156,8 @@ void Game::catWakeup(LTime theTime)
 
     myCat.moreAge(theTime.getDayValue()/2);
     myCat.getSick();
+
+    money-=6;
 }
 
 SDL_Point Game::getRandomPos()
@@ -189,22 +191,25 @@ void Game::catMove()
             setCellGoal(CELL_FOOD);
             Astar.findWay(myHouse.getAllCell(),&myCat.getPos(),&goal);
             isMoving = true;
+            frametime = SDL_GetTicks();
             break;
         case GAME_CAT_GOTOPOO:
             Astar.resetAlgorithm();
             setCellGoal(CELL_LITTER);
             Astar.findWay(myHouse.getAllCell(),&myCat.getPos(),&goal);
             isMoving = true;
+            frametime = SDL_GetTicks();
             break;
         case GAME_CAT_GOTOSLEEP:
             Astar.resetAlgorithm();
             goal = {turnToX(5),turnToY(0)};
             Astar.findWay(myHouse.getAllCell(),&myCat.getPos(),&goal);
             isMoving = true;
+            frametime = SDL_GetTicks();
             break;
         }
     }
-    else if(timer - lastMove >= 15000 && gCat == GAME_CAT_WAITING && !isMoving)
+    else if(timer - lastMove >= 10000 && gCat == GAME_CAT_WAITING && !isMoving && myCat.getHealth()>=30)
     {
         int chance = randomNumber(1,10);
         if(chance<=5)
@@ -213,9 +218,11 @@ void Game::catMove()
             goal = getRandomPos();
             gCat = GAME_CAT_GOTOSOMEWHERE;
             Astar.findWay(myHouse.getAllCell(),&myCat.getPos(),&goal);
+
         }
         else gCat = GAME_CAT_DOSTH;
         isMoving = true;
+        frametime = SDL_GetTicks();
     }
     if(isMoving && (gCat==GAME_CAT_GOTOEAT||gCat==GAME_CAT_GOTOPOO||gCat==GAME_CAT_GOTOSLEEP||gCat==GAME_CAT_GOTOSOMEWHERE)) {catGoToCell();}
     else if(isMoving && gCat==GAME_CAT_DOSTH)
@@ -259,12 +266,10 @@ void Game::pet()
     if(gCat == GAME_CAT_WAITING && !isMoving)
     {
         numPet++;
-        if(numPet<=3)
-        {
-            isMoving = true;
-            gCat = GAME_CAT_PET;
-        }
-        else myCat.moreLove(-5);
+        isMoving = true;
+        gCat = GAME_CAT_PET;
+        if(numPet>3) myCat.moreLove(-10);
+        frametime = SDL_GetTicks();
     }
 }
 
@@ -276,7 +281,7 @@ void Game::catPet()
         if(motionStop==0) {motionStop = timer;frame=0;}
         else if(motionStop!=0 && timer - motionStop >= 2400)
         {
-            myCat.moreLove(10);
+            if(numPet<=3) myCat.moreLove(5);
 
             isMoving = false;
 
@@ -295,6 +300,7 @@ void Game::excercise()
     {
         isMoving = true;
         gCat = GAME_CAT_EXCERCISE;
+        frametime = SDL_GetTicks();
     }
 }
 
@@ -306,8 +312,8 @@ void Game::catExcercise()
         if(motionStop==0) {motionStop = timer;frame=0;}
         else if(motionStop!=0 && timer - motionStop >= 2400)
         {
-            myCat.moreFull(-40);
-            myCat.moreHealth(10);
+            myCat.moreFull(-75);
+            myCat.moreHealth(5);
 
             isMoving = false;
 
@@ -326,6 +332,7 @@ void Game::pill(PILL p)
     {
         isMoving = true;
         gCat = GAME_CAT_PILL;
+        frametime = SDL_GetTicks();
         switch(p)
         {
         case PILL_E:
@@ -355,7 +362,6 @@ void Game::catPill()
         if(motionStop==0) {motionStop = timer;frame=0;}
         else if(motionStop!=0 && timer - motionStop >= 2400)
         {
-            myCat.moreHealth(50);
 
             isMoving = false;
 
@@ -370,14 +376,31 @@ void Game::catPill()
 
 void Game::catStart(LTime& theTime)
 {
-    catGetHungry();
-    catWantPoo();
-    catGetSleepy(theTime);
-    catMove();
-    catEat();
-    catPoo();
-    makingVid(theTime);
-    catSick();
+    if(gTo!=GO_TO_END)
+    {
+        catGetHungry();
+        catWantPoo();
+        catGetSleepy(theTime);
+        catMove();
+        catEat();
+        catPoo();
+        makingVid(theTime);
+        catSick();
+        if(theTime.getHourValue()>=6&&theTime.getHourValue()<18) gTime=GAME_TIME_DAY;
+        else if(theTime.getHourValue()>=18&&theTime.getHourValue()<23) gTime=GAME_TIME_NIGHT;
+        else gTime = GAME_TIME_SLEEP;
+        if(theTime.getHourValue()==23&&theTime.getMinuteValue()>=58) transition=true;
+        if(myCat.getHealth()<0)
+        {
+            transition=true;
+            transTime=SDL_GetTicks();
+            gTo = GO_TO_END;
+            letGo=true;
+            frame=0;
+            frametime=SDL_GetTicks();
+            isMoving=false;
+        }
+    }
 }
 
 void Game::openApp(PHONE_APP ap)
@@ -393,7 +416,7 @@ void Game::openApp(PHONE_APP ap)
             gPhone = PHONE_APP_MEOTIP;
             break;
         case PHONE_APP_ZOOTUBE:
-            if(gPlace==GAME_PLACE_HOUSE && canMakeVid) gPhone = PHONE_APP_ZOOTUBE;
+            if(gPlace==GAME_PLACE_HOUSE && canMakeVid) {gPhone = PHONE_APP_ZOOTUBE;vidFrame=0;vidFrameTime=SDL_GetTicks();}
             break;
         case PHONE_APP_MAP:
             gPhone = PHONE_APP_MAP;
@@ -421,18 +444,21 @@ void Game::goToShop(LTime& theTime)
         motionStop=0;
         if(bowlIsFull)
         {
-            myCat.setFull(100);
+            myCat.setFull(150);
+            myCat.moreLove(5);
             myCat.setIsFull(true);
             bowlIsFull = false;
         }
         else
         {
-            myCat.moreFull(-20);
+            myCat.moreFull(-75);
+            myCat.moreLove(-10);
             myCat.setIsFull(false);
         }
         if(shitInBox>5)
         {
             myCat.morePoo(40);
+            myCat.moreLove(-5);
             myCat.setIsFull(true);
         }
         else
@@ -441,7 +467,7 @@ void Game::goToShop(LTime& theTime)
             myCat.setIsFull(false);
             shitInBox++;
         }
-        if(myCat.getIsSick()) myCat.moreHealth(-30);
+        if(myCat.getIsSick()) myCat.moreHealth(-10);
         gPlace = GAME_PLACE_SHOP;
     }
 }
@@ -457,27 +483,31 @@ void Game::goToWork(LTime& theTime)
         gPlace = GAME_PLACE_WORK;
         if(bowlIsFull)
         {
-            myCat.setFull(100);
+            myCat.setFull(150);
+            myCat.moreLove(5);
             myCat.setIsFull(true);
             bowlIsFull = false;
         }
         else
         {
-            myCat.moreFull(-20);
+            myCat.moreFull(-75);
+            myCat.moreLove(-10);
             myCat.setIsFull(false);
         }
         if(shitInBox>5)
         {
             myCat.morePoo(40);
+            myCat.moreLove(-5);
             myCat.setIsFull(true);
         }
         else
         {
             myCat.setPoo(0);
+
             myCat.setIsFull(false);
             shitInBox++;
         }
-        if(myCat.getIsSick()) myCat.moreHealth(-60);
+        if(myCat.getIsSick()) myCat.moreHealth(-20);
     }
 }
 
@@ -504,7 +534,7 @@ void Game::goToHouse(LTime& theTime)
         myCat.setPos(getRandomPos());
         myCat.setCatMove(CAT_MOVE_NOTHING);
         gPlace = GAME_PLACE_HOUSE;
-        if(myCat.getIsSick()) myCat.moreHealth(-30);
+        if(myCat.getIsSick()) myCat.moreHealth(-10);
     }
 }
 
@@ -515,16 +545,16 @@ void Game::goToPlace(GAME_PLACE gp,LTime& theTime)
         switch(gp)
         {
         case GAME_PLACE_HOUSE:
-            goToHouse(theTime);
+            goToHouse(theTime);frame=0;frametime=SDL_GetTicks();
             break;
         case GAME_PLACE_SHOP:
-            goToShop(theTime);
+            if(gPlace==GAME_PLACE_HOUSE) {goToShop(theTime);frame=0;frametime=SDL_GetTicks();}
             break;
         case GAME_PLACE_WORK:
-            goToWork(theTime);
+            if(gPlace==GAME_PLACE_HOUSE) {goToWork(theTime);frame=0;frametime=SDL_GetTicks();}
             break;
         case GAME_PLACE_VET:
-            goToVet(theTime);
+            if(gPlace==GAME_PLACE_HOUSE) {goToVet(theTime);frame=0;frametime=SDL_GetTicks();}
             break;
         }
     }
@@ -536,17 +566,23 @@ void Game::atWork(LTime& theTime)
     {
         int timer = SDL_GetTicks();
         if(motionStop==0) {motionStop = timer;}
-        else if(motionStop!=0 && timer - motionStop >= 3000)
+        else if(motionStop!=0 && timer - motionStop >= 4500)
         {
             workTime++;
-            money+= (10 + workTime)/5 + 10;
+            money+= (5 + workTime)/5 + 5;
             theTime.skip(240);
             frame = 0;
             motionStop=0;
             lastMove = SDL_GetTicks();
             myCat.setPos(getRandomPos());
             myCat.setCatMove(CAT_MOVE_NOTHING);
-            gPlace = GAME_PLACE_HOUSE;
+        }
+        else if(motionStop!=0 && timer - motionStop >= 4100 && !transition)
+        {
+            transition=true;
+            transTime=SDL_GetTicks();
+            gTo = GO_TO_HOUSE;
+            letGo=true;
         }
     }
 }
@@ -557,25 +593,30 @@ void Game::atVet(LTime& theTime)
     {
         int timer = SDL_GetTicks();
         if(motionStop==0) {motionStop = timer;}
-        else if(motionStop!=0 && timer - motionStop >= 3000)
+        else if(motionStop!=0 && timer - motionStop >= 4500)
         {
             money-=200;
             myCat.drinkPill(PILL_PQA);
-            myCat.moreHealth(70);
-            myCat.setFull(100);
+            myCat.moreHealth(100);
+            myCat.setFull(150);
             myCat.setPoo(0);
             myCat.moreLove(30);
             myCat.setIsFull(false);
 
-            theTime.skip(240);
+            theTime.skip(90);
             frame = 0;
             motionStop=0;
             lastMove = SDL_GetTicks();
 
             myCat.setPos(getRandomPos());
             myCat.setCatMove(CAT_MOVE_NOTHING);
-            gPlace = GAME_PLACE_HOUSE;
-
+        }
+        if(motionStop!=0 && timer - motionStop >= 4100 && !transition)
+        {
+            transition=true;
+            transTime=SDL_GetTicks();
+            gTo = GO_TO_HOUSE;
+            letGo=true;
         }
     }
 }
@@ -590,7 +631,7 @@ void Game::makingVid(LTime& theTime)
         else if(vidStop!=0 && timer - vidStop >= 3000)
         {
             vidStop = 0;
-            money+=myCat.getHealth()/10+myCat.getLove()/5;
+            money+=myCat.getHealth()/100+myCat.getLove()/20;
             theTime.skip(60);
             gPhone = PHONE_APP_SCREEN;
             canMakeVid = false;
@@ -610,6 +651,49 @@ void Game::catSick()
             if(myCat.getSickQ()) myCat.morePoo(5);
             if(myCat.getSickA()) myCat.moreHealth(-2);
             timeSick = timer;
+        }
+    }
+}
+
+void Game::changeScene(LTime& theTime)
+{
+    int timer=SDL_GetTicks();
+    if(letGo&&gTo!=GO_TO_NONE)
+    {
+        if(timer-transTime>=850)
+        {
+            letGo=false;
+            switch(gTo)
+            {
+            case GO_TO_SHOP:
+                goToPlace(GAME_PLACE_SHOP,theTime);
+                gTo=GO_TO_NONE;
+                break;
+            case GO_TO_HOUSE:
+                goToPlace(GAME_PLACE_HOUSE,theTime);
+                gTo=GO_TO_NONE;
+                break;
+            case GO_TO_VET:
+                goToPlace(GAME_PLACE_VET,theTime);
+                gTo=GO_TO_NONE;
+                break;
+            case GO_TO_WORK:
+                goToPlace(GAME_PLACE_WORK,theTime);
+                gTo=GO_TO_NONE;
+                break;
+            case GO_TO_GAME:
+                {
+                    gTo=GO_TO_NONE;
+                    setGameState(GAME_STATE_PLAY);
+                    int sum = SDL_GetTicks();
+                    theTime.moreSumStop(sum);
+                    break;
+                }
+            case GO_TO_END:
+                gTo=GO_TO_NONE;
+                setGameState(GAME_STATE_OVER);
+                break;
+            }
         }
     }
 }

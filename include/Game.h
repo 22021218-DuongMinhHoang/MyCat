@@ -18,6 +18,7 @@
 
 using namespace std;
 
+//cat action
 enum GAME_CAT
 {
     GAME_CAT_GOTOEAT,
@@ -31,6 +32,7 @@ enum GAME_CAT
     GAME_CAT_PILL
 };
 
+//random thing the cat do
 enum CAT_DO
 {
     CAT_DO_OTHER,
@@ -56,6 +58,32 @@ enum PHONE_APP
     PHONE_APP_SCREEN
 };
 
+enum GAME_STATE
+{
+    GAME_STATE_MENU,
+    GAME_STATE_PLAY,
+    GAME_STATE_OVER
+};
+
+//going to place
+enum GO_TO
+{
+    GO_TO_SHOP,
+    GO_TO_WORK,
+    GO_TO_VET,
+    GO_TO_HOUSE,
+    GO_TO_NONE,
+    GO_TO_GAME,
+    GO_TO_END
+};
+
+enum GAME_TIME
+{
+    GAME_TIME_DAY,
+    GAME_TIME_NIGHT,
+    GAME_TIME_SLEEP
+};
+
 class Game
 {
     public:
@@ -73,6 +101,7 @@ class Game
         int getCatFood(){return catFood;}
         int getCatHealth(){return myCat.getHealth();}
         int getCatLove(){return myCat.getLove();}
+        int getCatAge(){return myCat.getAge();}
         int getShit(){return shitInBox;}
         int getMoney(){return money;}
         int getPillE(){return pillE;}
@@ -80,6 +109,7 @@ class Game
         int getPillQ(){return pillQ;}
         int getPillA(){return pillA;}
         int getPillPQA(){return pillPQA;}
+        int getNumPet(){return numPet;}
 
         void setBowlIsFull(bool yes){bowlIsFull=yes;}
         bool getBowlIsFull(){return bowlIsFull;}
@@ -120,7 +150,6 @@ class Game
         DIRECTION getCatDirection(){return myCat.getDirection();}
         bool getIsMoving(){return isMoving;}
 
-
         CAT_MOVE getCatMove(){return myCat.getCatMove();}
         CAT_DO getCatDo(){return catDo;}
         GAME_CAT getGameCat(){return gCat;}
@@ -153,9 +182,37 @@ class Game
         void goToVet(LTime& theTime);
         void goToPlace(GAME_PLACE gp,LTime& theTime);
 
+        //animation frame
         int frame = 0;
+        int frametime = 0;
 
+        //making zootubevid frame
+        int vidFrame = 0;
+        int vidFrameTime = 0;
+
+        //transition frame
+        int transFrame = 34;
+        int transFrameTime =0;
+        int transTime=0;
+
+        //for transition
+        bool letGo = false,transition=false;
+        GO_TO gTo=GO_TO_NONE;
+
+        //game time
+        GAME_TIME gTime = GAME_TIME_DAY;
+
+        //place game
         GAME_PLACE getGamePlace(){return gPlace;}
+
+        //game state
+        GAME_STATE getGameState(){return gState;}
+        void setGameState(GAME_STATE gs){gState=gs;}
+
+        //endgame letter
+        bool letter = false;
+
+        void changeScene(LTime& theTime);
     private:
         Cat myCat;
         House myHouse;
@@ -167,7 +224,7 @@ class Game
 
         int timeHungry = 0,timeFeelPoo = 0,timeSick=0;
         int motionStop = 0;
-        int catFood = 10;
+        int catFood = 5;
         int pillE = 0;
         int pillP = 0;
         int pillQ = 0;
@@ -183,13 +240,13 @@ class Game
 
         bool bowlIsFull = false;
         bool isMoving = false;
-        bool startAnimate = false;
         bool canMakeVid = true;
 
         GAME_CAT gCat = GAME_CAT_WAITING;
         GAME_PLACE gPlace = GAME_PLACE_HOUSE;
         CAT_DO catDo = CAT_DO_OTHER;
         PHONE_APP gPhone = PHONE_APP_SCREEN;
+        GAME_STATE gState = GAME_STATE_MENU;
 };
 
 #endif // GAME_H

@@ -94,8 +94,8 @@ class Cat
 
     private:
         SDL_Point Pos = {0,0};
-        int mFull = 100;
-        int mLove = 10;
+        int mFull = 150;
+        int mLove = 0;
         int mPoo = 0;
         int mHealth = 50;
         int mAge = 0;

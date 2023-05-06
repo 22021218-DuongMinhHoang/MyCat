@@ -39,15 +39,27 @@ void renderButtonWithFrame(map<string,Button>& theButton,string buttonName,Galle
 
 void renderAllButton(map<string,Button>& theButton,Game& theGame,Gallery& theGallery,SDL_Renderer* renderer);
 
+void renderMenu(Game& theGame,Gallery& gallery,SDL_Renderer* renderer);
+
+void renderGameOver(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,map<string,Text>& theText,bool& letter,Button again,Button getOut);
+
 void renderButtonOutline(Button theButton,int thick,SDL_Renderer* renderer);
 
 void renderHouse(Game& theGame,Gallery& gallery,SDL_Renderer* renderer);
 
-void renderCat(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theTime,int& frametime);
+void renderWork(Game& theGame,Gallery& gallery,SDL_Renderer* renderer);
+
+void renderVet(Game& theGame,Gallery& gallery,SDL_Renderer* renderer);
+
+void renderCat(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theTime);
 
 void renderShop(Game& theGame,Gallery& gallery,Shop& theShop,SDL_Renderer* renderer,map<string,Text>& theText);
 
 void renderPhone(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theTime,map<string,Text>& theText);
 
 void renderNotePad(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theTime,map<string,Text>& theText);
+
+void renderTransition(Gallery& gallery,SDL_Renderer* renderer,Game& theGame);
+
+void renderEveryThing(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theTime,map<string,Button>& theButton,map<string,Text>& theText,Shop& theShop,Button again,Button getOut);
 #endif // TEXTURE_H

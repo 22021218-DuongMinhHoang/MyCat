@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1683135239 source:d:\itne\game\mycat\src\texture.cpp
+1683347629 source:d:\itne\game\mycat\src\texture.cpp
 	"Texture.h"
 
-1683107297 d:\itne\game\mycat\include\texture.h
+1683343946 d:\itne\game\mycat\include\texture.h
 	<iostream>
 	<string>
 	<SDL.h>
@@ -15,22 +15,20 @@
 	"Text.h"
 	"Shop.h"
 
-1683083966 d:\itne\game\mycat\const.h
+1683261190 d:\itne\game\mycat\const.h
 
-1683173149 source:d:\itne\game\mycat\main.cpp
+1683347862 source:d:\itne\game\mycat\main.cpp
 	<iostream>
 	<iostream>
 	<string>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
-	<vector>
 	<ctime>
 	<map>
 	"Texture.h"
 	"Button.h"
 	"Text.h"
-	"Algorithm.h"
 	"LTime.h"
 	"Game.h"
 	"Shop.h"
@@ -45,13 +43,13 @@
 	<map>
 	<vector>
 
-1683118265 source:d:\itne\game\mycat\src\gallery.cpp
+1683346531 source:d:\itne\game\mycat\src\gallery.cpp
 	"Gallery.h"
 
 1683041600 source:d:\itne\game\mycat\src\button.cpp
 	"Button.h"
 
-1682736284 d:\itne\game\mycat\include\button.h
+1683259762 d:\itne\game\mycat\include\button.h
 	<iostream>
 	<iostream>
 	<string>
@@ -72,10 +70,10 @@
 	<SDL_ttf.h>
 	<map>
 
-1683173023 source:d:\itne\game\mycat\src\game.cpp
+1683345240 source:d:\itne\game\mycat\src\game.cpp
 	"Game.h"
 
-1683172743 d:\itne\game\mycat\include\game.h
+1683347041 d:\itne\game\mycat\include\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -91,7 +89,7 @@
 	"House.h"
 	"gameFunc.h"
 
-1682926337 source:d:\itne\game\mycat\src\algorithm.cpp
+1683217549 source:d:\itne\game\mycat\src\algorithm.cpp
 	"Algorithm.h"
 
 1682910870 d:\itne\game\mycat\include\algorithm.h
@@ -119,10 +117,10 @@
 1682216911 source:d:\itne\game\mycat\src\cell.cpp
 	"Cell.h"
 
-1683133707 source:d:\itne\game\mycat\src\cat.cpp
+1683224252 source:d:\itne\game\mycat\src\cat.cpp
 	"Cat.h"
 
-1683133707 d:\itne\game\mycat\include\cat.h
+1683341049 d:\itne\game\mycat\include\cat.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -142,7 +140,7 @@
 1682495974 source:d:\itne\game\mycat\src\ltime.cpp
 	"LTime.h"
 
-1682912173 d:\itne\game\mycat\include\ltime.h
+1683260544 d:\itne\game\mycat\include\ltime.h
 	<iostream>
 	<string>
 	<SDL.h>
@@ -161,7 +159,7 @@
 	"../const.h"
 	"Cell.h"
 
-1682925622 d:\itne\game\mycat\include\gamefunc.h
+1683214996 d:\itne\game\mycat\include\gamefunc.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -171,10 +169,10 @@
 	<algorithm>
 	"../const.h"
 
-1682925751 source:d:\itne\game\mycat\src\gamefunc.cpp
+1683214960 source:d:\itne\game\mycat\src\gamefunc.cpp
 	"gameFunc.h"
 
-1683104296 source:d:\itne\game\mycat\src\shop.cpp
+1683223427 source:d:\itne\game\mycat\src\shop.cpp
 	"Shop.h"
 
 1683104146 d:\itne\game\mycat\include\shop.h

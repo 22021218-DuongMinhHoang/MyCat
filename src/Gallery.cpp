@@ -58,10 +58,6 @@ bool Gallery::loadGallery()
     if(pictures["litter"]==nullptr) return false;
     id.push_back("litter");
 
-    pictures["menuButton"] = loadImage("menuButton.png");
-    if(pictures["menuButton"]==nullptr) return false;
-    id.push_back("menuButton");
-
     pictures["shovel"] = loadImage("shovel.png");
     if(pictures["shovel"]==nullptr) return false;
     id.push_back("shovel");
@@ -138,6 +134,10 @@ bool Gallery::loadGallery()
     if(pictures["openMyMeo"]==nullptr) return false;
     id.push_back("openMyMeo");
 
+    pictures["openMeoTip"] = loadImage("openMeoTip.png");
+    if(pictures["openMeoTip"]==nullptr) return false;
+    id.push_back("openMeoTip");
+
     pictures["openZooTube"] = loadImage("openZooTube.png");
     if(pictures["openZooTube"]==nullptr) return false;
     id.push_back("openZooTube");
@@ -149,6 +149,38 @@ bool Gallery::loadGallery()
     pictures["working"] = loadImage("working.png");
     if(pictures["working"]==nullptr) return false;
     id.push_back("working");
+
+    pictures["atVet"] = loadImage("atVet.png");
+    if(pictures["atVet"]==nullptr) return false;
+    id.push_back("atVet");
+
+    pictures["menu"] = loadImage("menu.png");
+    if(pictures["menu"]==nullptr) return false;
+    id.push_back("menu");
+
+    pictures["start"] = loadImage("start.png");
+    if(pictures["start"]==nullptr) return false;
+    id.push_back("start");
+
+    pictures["showMeoTip"] = loadImage("showMeoTip.png");
+    if(pictures["showMeoTip"]==nullptr) return false;
+    id.push_back("showMeoTip");
+
+    pictures["gameOver"] = loadImage("gameOver.png");
+    if(pictures["gameOver"]==nullptr) return false;
+    id.push_back("gameOver");
+
+    pictures["letter"] = loadImage("letter.png");
+    if(pictures["letter"]==nullptr) return false;
+    id.push_back("letter");
+
+    pictures["transition"] = loadImage("transition.png");
+    if(pictures["transition"]==nullptr) return false;
+    id.push_back("transition");
+
+    pictures["end"] = loadImage("end.png");
+    if(pictures["end"]==nullptr) return false;
+    id.push_back("end");
 
     return true;
 }

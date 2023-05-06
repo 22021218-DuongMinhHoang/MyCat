@@ -172,27 +172,28 @@ void Algorithm::goToGoal(SDL_Point* cat, SDL_Point* finish,Cat& theCat,int& fram
     int timer = SDL_GetTicks();
     if(ok)
     {
-        if(way->prev!=nullptr)
+        if(way!=nullptr)
         {
             int cellx = turnToCellX(way->getx()),celly = turnToCellY(way->gety()),
             cellnowx=turnToCellX(cat->x),cellnowy=turnToCellY(cat->y);
-            if(isHighPlace(cellnowx,cellnowy)||isHighPlace(cellx,celly))
+            if(isPlaceNeedJump(cellnowx,cellnowy) || isHighPlace(cellx,celly) || isPlaceNeedJump(cellx,celly) || isHighPlace(cellnowx,cellnowy))
             {
+
                 theCat.setCatMove(CAT_MOVE_JUMP);
             }
             else theCat.setCatMove(CAT_MOVE_WALK);
         }
-        if( timer - setime>75)
+        if( timer - setime>=15)
         {
             if(cat->x != way->getx())
             {
-                if(way->getx() < cat->x) {cat->x-=4; theCat.changeDirection(DIRECTION_LEFT);}
-                if(way->getx() > cat->x) {cat->x+=4; theCat.changeDirection(DIRECTION_RIGHT);}
+                if(way->getx() < cat->x) {cat->x-=1; theCat.changeDirection(DIRECTION_LEFT);}
+                if(way->getx() > cat->x) {cat->x+=1; theCat.changeDirection(DIRECTION_RIGHT);}
             }
             if(cat->y != way->gety())
             {
-                if(way->gety() < cat->y) {cat->y-=4; theCat.changeDirection(DIRECTION_UP);}
-                if(way->gety() > cat->y) {cat->y+=4; theCat.changeDirection(DIRECTION_DOWN);}
+                if(way->gety() < cat->y) {cat->y-=1; theCat.changeDirection(DIRECTION_UP);}
+                if(way->gety() > cat->y) {cat->y+=1; theCat.changeDirection(DIRECTION_DOWN);}
             }
             setime = timer;
             if(cat->x == way->getx() && cat->y == way->gety() && way->prev!=nullptr ) {way = way->prev;frame=0;}

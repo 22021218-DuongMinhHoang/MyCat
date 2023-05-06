@@ -38,6 +38,7 @@ class LTime
         void skip(int minute);
 
         void setState(TIME_STATE setst){tState = setst;}
+        void moreSumStop(int n){sumStop+=n;}
     private:
         Uint32 theTime;
 

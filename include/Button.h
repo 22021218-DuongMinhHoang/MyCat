@@ -41,6 +41,9 @@ class Button
         int getx() {return position.x;}
         int gety() {return position.y;}
 
+        int getWidth(){return bWidth;}
+        int getHeight(){return bHeight;}
+
     private:
         BUTTON_STATE bState;
         MOUSE_IN_BUTTON bMouse;

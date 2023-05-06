@@ -32,7 +32,7 @@ void Shop::pickPillA(int num)
 }
 void Shop::pickPillPQA(int num)
 {
-    pillPQA+=num;sumPrice+=num*30;
+    pillPQA+=num;sumPrice+=num*80;
 }
 
 void Shop::resetShop()

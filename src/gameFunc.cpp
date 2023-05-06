@@ -17,3 +17,13 @@ bool isHighPlace(int cellx,int celly)
     if(((cellx==5||cellx==6)&&celly==1)||(cellx==5&&celly==5)||(cellx==2&&celly==2)) return true;
     return false;
 }
+
+bool isPlaceNeedJump(int cellx,int celly)
+{
+    if( (celly==1&&(cellx==2||cellx==4||cellx==7)) || (celly==2&&(cellx==3||cellx==5||cellx==6)) || (celly==3&&celly==2) ||
+        (celly==4&&cellx==5) || (celly==5&&(cellx==4||cellx==6)) )
+    {
+        return true;
+    }
+    return false;
+}

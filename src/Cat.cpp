@@ -15,17 +15,17 @@ void Cat::getSick()
     int chanceP = randomNumber(1,100);
     int chanceQ = randomNumber(1,100);
     int chanceA = randomNumber(1,100);
-    if(chanceP <= 5 + mAge*10)
+    if(chanceP <= 5 + mAge*20)
     {
         isSick = true;
         sickP = true;
     }
-    if(chanceQ <= 5 + mAge*10)
+    if(chanceQ <= 5 + mAge*20)
     {
         isSick = true;
         sickQ = true;
     }
-    if(chanceA <= 5 + mAge*10)
+    if(chanceA <= 5 + mAge*20)
     {
         isSick = true;
         sickA = true;
@@ -83,14 +83,14 @@ void Cat::drinkPill(PILL p)
 
         case PILL_E:
         {
-            mLove-=10;
-            mHealth+=30;
+            mLove-=5;
+            mHealth+=20;
             break;
         }
 
         case PILL_PQA:
         {
-            mHealth+=30;
+            mHealth+=25;
             sickA=false;
             sickP=false;
             sickQ=false;
