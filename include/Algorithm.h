@@ -26,8 +26,6 @@ class Algorithm
 
         Cell* findBest();
 
-        //void getAllCell();
-
         bool Astar();
 
         void openMoreCell(Cell* c);

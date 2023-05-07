@@ -209,14 +209,6 @@ void Algorithm::goToGoal(SDL_Point* cat, SDL_Point* finish,Cat& theCat,int& fram
 void Algorithm::resetAlgorithm()
 {
     ok = false;
-//    for(int y=0;y<NUM_OF_CELL_Y;y++)
-//    {
-//        for(int x=0;x<NUM_OF_CELL_X;x++)
-//        {
-//            allOfCell[y][x].setHandleCell(CELL_NONE);
-//            allOfCell[y][x].prev = nullptr;
-//        }
-//    }
     allOfCell.clear();
     way = nullptr;
     setime = 0;

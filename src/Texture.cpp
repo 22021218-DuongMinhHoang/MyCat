@@ -240,7 +240,6 @@ void renderGameOver(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,map<st
 {
     if(theGame.getGameState()==GAME_STATE_OVER)
     {
-
         if(theGame.frame==0) { gallery.playChunk("crying"); Mix_HaltMusic();}
         theGame.letter=false;
         if(theGame.frame>5) {theGame.frame=6;theGame.letter=true;}
@@ -456,6 +455,7 @@ void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Sh
 
             theGame.gTo = GO_TO_END;
             theGame.letGo=true;
+            theGame.setIsMoving(false);
             theGame.frame=0;
             theGame.frametime=SDL_GetTicks();
         }
@@ -661,7 +661,7 @@ void renderPhone(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& th
         renderTexture(0,SCREEN_HEIGHT-600,322,500,gallery.getTexture("openZooTube"),renderer);
         int timer = SDL_GetTicks();
         if(theGame.vidFrame==0) {gallery.playChunk("happi");Mix_Volume(0,25);}
-        if(timer - theGame.vidFrameTime>=200)
+        if(timer - theGame.vidFrameTime>=400)
         {
             theGame.vidFrame++;
             theGame.vidFrameTime=timer;

@@ -18,6 +18,10 @@
 
 using namespace std;
 
+//name:
+//frame->animation
+//___Time->last time action (animation)
+
 //cat action
 enum GAME_CAT
 {
@@ -41,6 +45,7 @@ enum CAT_DO
     CAT_DO_LIEDOWN
 };
 
+//game place
 enum GAME_PLACE
 {
     GAME_PLACE_HOUSE,
@@ -49,6 +54,7 @@ enum GAME_PLACE
     GAME_PLACE_WORK
 };
 
+//phone app
 enum PHONE_APP
 {
     PHONE_APP_MYMEO,
@@ -58,6 +64,7 @@ enum PHONE_APP
     PHONE_APP_SCREEN
 };
 
+//game state
 enum GAME_STATE
 {
     GAME_STATE_MENU,
@@ -77,6 +84,7 @@ enum GO_TO
     GO_TO_END
 };
 
+//game time
 enum GAME_TIME
 {
     GAME_TIME_DAY,
@@ -90,12 +98,30 @@ class Game
         Game();
         virtual ~Game();
 
-        void catMoreFull(int n);
+        //check and do
+        void catStart(LTime& theTime);
+
+        //all cat do
+        void catEat();
+        void catPoo();
+        void catWakeup(LTime theTime);
+        void catPet();
+        void catExcercise();
+        void catPill();
+        void catSomething();
+        void catSick();
         void catGetHungry();
         void catWantPoo();
         void catGetSleepy(LTime theTime);
+
+        //interact with cat
+        void pet();
+        void excercise();
+        void pill(PILL p);
+        bool getIsSick(){return myCat.getIsSick();}
         void makingVid(LTime& theTime);
 
+        //get cat stat and stuff
         int getCatFull(){return myCat.getFull();}
         int getCatPoo(){return myCat.getPoo();}
         int getCatFood(){return catFood;}
@@ -110,34 +136,37 @@ class Game
         int getPillA(){return pillA;}
         int getPillPQA(){return pillPQA;}
         int getNumPet(){return numPet;}
+        bool getIsMoving(){return isMoving;}
 
+        //feed and poo
         void setBowlIsFull(bool yes){bowlIsFull=yes;}
         bool getBowlIsFull(){return bowlIsFull;}
         void fillBowl(){if(!bowlIsFull){bowlIsFull=true;catFood--;}}
         void takeShit(){if(shitInBox>0){shitInBox=0;}}
 
+        //cat movement
+        void catGoToCell();
+        void catMove();
+        void setCellGoal(CELL_JOBS cj);
+        SDL_Point getRandomPos();
+        SDL_Point getCatPos(){return myCat.getPos();}
         SDL_Point getCellPos(CELL_JOBS cj)
         {
             SDL_Point f = {turnToX(myHouse.getCellJobX(cj)),turnToY(myHouse.getCellJobY(cj))};
             return f;
         }
-
-        void catGoToCell();
-        void catMove();
-        void setCellGoal(CELL_JOBS cj);
-
-        SDL_Point getRandomPos();
-
-        SDL_Point getCatPos(){return myCat.getPos();}
+        DIRECTION getCatDirection(){return myCat.getDirection();}
+        CAT_MOVE getCatMove(){return myCat.getCatMove();}
+        CAT_DO getCatDo(){return catDo;}
+        GAME_CAT getGameCat(){return gCat;}
 
 
-
+        //shop
         bool isInShop()
         {
             if(gPlace==GAME_PLACE_SHOP) return true;
             return false;
         }
-
         void buyFood(int num);
         void moreFood(int n){catFood+=n;}
         void morePillE(int num){pillE+=num;}
@@ -147,33 +176,12 @@ class Game
         void morePillPQA(int num){pillPQA+=num;}
         void moreMoney(int n){money+=n;}
 
-        DIRECTION getCatDirection(){return myCat.getDirection();}
-        bool getIsMoving(){return isMoving;}
-
-        CAT_MOVE getCatMove(){return myCat.getCatMove();}
-        CAT_DO getCatDo(){return catDo;}
-        GAME_CAT getGameCat(){return gCat;}
-
-        void catEat();
-        void catPoo();
-        void catWakeup(LTime theTime);
-        void catPet();
-        void catExcercise();
-        void catPill();
-        void catSomething();
-        void catSick();
-
-        void catStart(LTime& theTime);
-
-        void pet();
-        void excercise();
-        void pill(PILL p);
-        bool getIsSick(){return myCat.getIsSick();}
-
+        //using phone
         void openApp(PHONE_APP pa);
         void backToScreen();
         PHONE_APP getPhoneApp(){return gPhone;}
 
+        //go to somewhere
         void atWork(LTime& theTime);
         void atVet(LTime& theTime);
         void goToShop(LTime& theTime);
@@ -193,11 +201,12 @@ class Game
         //transition frame
         int transFrame = 34;
         int transFrameTime =0;
-        int transTime=0;
+        int transTime=0;//the time start transiton
 
         //for transition
-        bool letGo = false,transition=false;
+        bool letGo = false,transition=false; //start transition and ready to go to place
         GO_TO gTo=GO_TO_NONE;
+        void changeScene(LTime& theTime);
 
         //game time
         GAME_TIME gTime = GAME_TIME_DAY;
@@ -212,7 +221,8 @@ class Game
         //endgame letter
         bool letter = false;
 
-        void changeScene(LTime& theTime);
+        void setIsMoving(bool b){isMoving=b;}
+
     private:
         Cat myCat;
         House myHouse;
@@ -223,21 +233,18 @@ class Game
         SDL_Point goal = {0,0};
 
         int timeHungry = 0,timeFeelPoo = 0,timeSick=0;
-        int motionStop = 0;
+        int motionStop = 0,vidStop = 0;
+        int lastMove = 0;
         int catFood = 5;
         int pillE = 0;
         int pillP = 0;
         int pillQ = 0;
         int pillA = 0;
         int pillPQA = 0;
-        int lastMove = 0;
         int shitInBox = 0;
-        int vidStop = 0;
         int numPet = 0;
-
         int money = 10;
         int workTime = 0;
-
         bool bowlIsFull = false;
         bool isMoving = false;
         bool canMakeVid = true;

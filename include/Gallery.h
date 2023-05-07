@@ -25,6 +25,7 @@ class Gallery
         void loadMusicsAndChunks();
         void freeImg();
         void freeChunksAndMusics();
+        void freeAll(){freeImg();freeChunksAndMusics();}
     private:
         SDL_Renderer* renderer;
         SDL_Texture* loadImage(string path);

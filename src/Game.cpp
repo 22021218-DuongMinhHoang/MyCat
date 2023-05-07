@@ -16,11 +16,6 @@ Game::~Game()
     delete &Astar;
 }
 
-void Game::catMoreFull(int n)
-{
-    myCat.moreFull(n);
-}
-
 void Game::catGetHungry()
 {
     Uint32 timer = SDL_GetTicks();
@@ -636,7 +631,7 @@ void Game::makingVid(LTime& theTime)
     {
         int timer = SDL_GetTicks();
         if(vidStop==0) {vidStop = timer;}
-        else if(vidStop!=0 && timer - vidStop >= 3000)
+        else if(vidStop!=0 && timer - vidStop >= 5000)
         {
             vidStop = 0;
             money+=myCat.getHealth()/100+myCat.getLove()/20;

@@ -9,8 +9,7 @@ using namespace std;
 enum TIME_STATE
 {
     TIME_CONTINUE,
-    TIME_STOP,
-    TIME_SETTIMER
+    TIME_STOP
 };
 
 class LTime

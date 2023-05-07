@@ -10,6 +10,7 @@
 
 using namespace std;
 
+//cat direction
 enum DIRECTION
 {
     DIRECTION_UP,
@@ -18,6 +19,7 @@ enum DIRECTION
     DIRECTION_LEFT
 };
 
+//cat movement
 enum CAT_MOVE
 {
     CAT_MOVE_NOTHING,
@@ -29,6 +31,7 @@ enum CAT_MOVE
     CAT_MOVE_SOMETHING
 };
 
+//pill
 enum PILL
 {
     PILL_E,
@@ -44,6 +47,7 @@ class Cat
         Cat();
         virtual ~Cat();
 
+        //all cat stat
         int getFull(){return mFull;}
         void setFull(int n){mFull = n;}
         void moreFull(int n){mFull += n;}
@@ -75,6 +79,7 @@ class Cat
         bool getSickQ(){return sickQ;}
         bool getSickA(){return sickA;}
 
+        //cat position
         void setPos(SDL_Point p){Pos.x = p.x; Pos.y = p.y;}
         void setPos(int x,int y){Pos.x = x; Pos.y = y;}
 
@@ -83,12 +88,15 @@ class Cat
 
         SDL_Point& getPos(){return Pos;}
 
+        //direction
         void changeDirection(DIRECTION d){dCat = d;}
         DIRECTION getDirection(){return dCat;}
 
+        //cat movement
         void setCatMove(CAT_MOVE cm){cMove=cm;}
         CAT_MOVE getCatMove(){return cMove;}
 
+        //sick and drink pill
         void getSick();
         void drinkPill(PILL p);
 
