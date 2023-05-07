@@ -80,7 +80,6 @@ int main(int argc, char* argv[])
             freeTexts(theText);
             SDL_RenderClear(renderer);
             gallery.freeAll();
-            theGame.outGame();
         }
         close(window,renderer);
         cout<<"end"<<endl;

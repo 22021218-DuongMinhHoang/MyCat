@@ -221,8 +221,6 @@ class Game
         bool letter = false;
 
         void setIsMoving(bool b){isMoving=b;}
-
-        void outGame(){delete &myHouse;delete &myCat;delete &Astar;}
     private:
         Cat myCat;
         House myHouse;
