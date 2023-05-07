@@ -61,4 +61,4 @@
 - Kinh nghiệm và bài học rút ra:
   - Học được cách tách file, cách dùng SDL và cách dùng GitHub.
   - Rút ra kinh nghiệm quản lí và sắp xếp thời gian, xây dựng kế hoạch.
-  - Rèn luyện được khả năng tự học, tự tìm hiểu và khả năng lập .
+  - Rèn luyện được khả năng tự học, tự tìm hiểu và khả năng lập trình.
