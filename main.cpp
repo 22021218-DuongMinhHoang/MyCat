@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
                             break;
                         }
                     }
-                    if(again.handleEvent(&e)&&theGame.getGameState()==GAME_STATE_OVER) {quit=true;out=false;}
+                    if(again.handleEvent(&e)&&theGame.getGameState()==GAME_STATE_OVER) {quit=true;}
                     if(getOut.handleEvent(&e)&&theGame.getGameState()==GAME_STATE_OVER){quit=true;out=true;}
                     handleAllButton(theButton,&e,theGame,theShop,theTime,gallery);
                 }
@@ -82,6 +82,7 @@ int main(int argc, char* argv[])
             gallery.freeAll();
         }
         close(window,renderer);
+        cout<<"end"<<endl;
     }
     return 0;
 }

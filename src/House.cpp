@@ -39,6 +39,8 @@ void House::setCellJob(int cellx,int celly,CELL_JOBS cj)
         allCell[celly][cellx].setJob(CELL_LITTER);
         cellLitterX = cellx; cellLitterY = celly;
         break;
+    default:
+        break;
     }
 }
 
@@ -50,6 +52,8 @@ int House::getCellJobX(CELL_JOBS cj)
         return cellFoodX;
     case CELL_LITTER:
         return cellLitterX;
+    default:
+        break;
     }
     return 0;
 }
@@ -62,6 +66,8 @@ int House::getCellJobY(CELL_JOBS cj)
         return cellFoodY;
     case CELL_LITTER:
         return cellLitterY;
+    default:
+        break;
     }
     return 0;
 }

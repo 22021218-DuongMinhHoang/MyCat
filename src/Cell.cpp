@@ -18,4 +18,5 @@ Cell& Cell::operator=(const Cell& c)
     g = c.g; h = c.h; f = c.f;
     cellx = c.cellx; celly = c.celly;
     cHandle = c.cHandle;
+    return *this;
 }
