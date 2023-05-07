@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1683433822 source:d:\itne\game\mycat\src\texture.cpp
+1683440232 source:d:\itne\game\mycat\src\texture.cpp
 	"Texture.h"
 
 1683382407 d:\itne\game\mycat\include\texture.h
@@ -15,9 +15,9 @@
 	"Text.h"
 	"Shop.h"
 
-1683261190 d:\itne\game\mycat\const.h
+1683434211 d:\itne\game\mycat\const.h
 
-1683433603 source:d:\itne\game\mycat\main.cpp
+1683434175 source:d:\itne\game\mycat\main.cpp
 	<iostream>
 	<iostream>
 	<string>
@@ -34,7 +34,7 @@
 	"Game.h"
 	"Shop.h"
 
-1683433436 d:\itne\game\mycat\include\gallery.h
+1683440007 d:\itne\game\mycat\include\gallery.h
 	<iostream>
 	<iostream>
 	<string>
@@ -45,7 +45,7 @@
 	<map>
 	<vector>
 
-1683434071 source:d:\itne\game\mycat\src\gallery.cpp
+1683440027 source:d:\itne\game\mycat\src\gallery.cpp
 	"Gallery.h"
 
 1683041600 source:d:\itne\game\mycat\src\button.cpp

@@ -230,6 +230,12 @@ void Gallery::loadMusicsAndChunks()
     chunks["working"]=Mix_LoadWAV("music\\working.wav");
     chunkId.push_back("working");
 
+    chunks["sleep"]=Mix_LoadWAV("music\\sleep.wav");
+    chunkId.push_back("sleep");
+
+    chunks["morning"]=Mix_LoadWAV("music\\morning.wav");
+    chunkId.push_back("morning");
+
     musics["theme"]=Mix_LoadMUS("music\\myCatTheme.wav");
     musicId.push_back("theme");
 }
@@ -242,6 +248,11 @@ void Gallery::playChunk(string name)
 void Gallery::playChunk(string name,int loop)
 {
     if(Mix_Playing(-1)==0) Mix_PlayChannel(-1,chunks[name],loop);
+}
+
+void Gallery::playChunkWithOtherChunk(string name,int loop)
+{
+    if(Mix_Playing(-1)>=0) Mix_PlayChannel(-1,chunks[name],loop);
 }
 
 void Gallery::playMusic(string name)

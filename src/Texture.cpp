@@ -821,8 +821,10 @@ void renderCat(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theT
             {
                 theGame.frame=7;
                 theGame.catWakeup(theTime);
+                gallery.playChunkWithOtherChunk("morning",0);
             }
             if(frame>=5&&frame<7) theGame.frame=5;
+            if(frame==4) gallery.playChunk("sleep");
             renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*7,31,31,gallery.getTexture("myCat"),renderer);
         }
         else if(theGame.getGameCat()==GAME_CAT_PET)

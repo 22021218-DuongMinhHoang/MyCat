@@ -21,6 +21,7 @@ class Gallery
         SDL_Texture* getTexture(string path);
         void playChunk(string name);
         void playChunk(string name,int loop);
+        void playChunkWithOtherChunk(string name,int loop);
         void playMusic(string name);
         void loadMusicsAndChunks();
         void freeImg();
