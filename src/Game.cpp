@@ -11,9 +11,6 @@ Game::Game()
 Game::~Game()
 {
     //dtor
-    delete &myHouse;
-    delete &myCat;
-    delete &Astar;
 }
 
 void Game::catGetHungry()

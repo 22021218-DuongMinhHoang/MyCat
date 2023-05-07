@@ -9,6 +9,7 @@ Algorithm::Algorithm()
 Algorithm::~Algorithm()
 {
     //dtor
+
 }
 
 Cell* Algorithm::findBest()
