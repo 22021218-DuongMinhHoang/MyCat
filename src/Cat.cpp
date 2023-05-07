@@ -83,8 +83,8 @@ void Cat::drinkPill(PILL p)
 
         case PILL_E:
         {
-            mLove-=5;
-            mHealth+=20;
+            mLove-=50;
+            mHealth+=300;
             break;
         }
 
