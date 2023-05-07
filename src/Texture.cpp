@@ -81,7 +81,7 @@ void setButtons(map<string,Button>& theButton)
     theButton["fillBowl"].setPos(1080,60);
     theButton["shovel"].setPos(1170,60);
     theButton["pet"].setPos(1260,60);
-    theButton["excercise"].setPos(1080,150);
+    theButton["exercise"].setPos(1080,150);
     theButton["pillE"].setPos(1170,150);
     theButton["pillP"].setPos(1260,150);
     theButton["pillQ"].setPos(1080,240);
@@ -343,10 +343,10 @@ void renderAllButton(map<string,Button>& theButton,Game& theGame,Gallery& theGal
                     renderButtonOutline(theButton["pet"],2,renderer);
             }
 
-            if(!theButton["excercise"].isMouseInButton()) renderButtonWithFrame(theButton,"excercise",theGallery,"excercise",renderer);
+            if(!theButton["exercise"].isMouseInButton()) renderButtonWithFrame(theButton,"exercise",theGallery,"exercise",renderer);
             else {
-                    renderButtonWithFrame(theButton,"excercise",theGallery,"excercise",renderer);
-                    renderButtonOutline(theButton["excercise"],2,renderer);
+                    renderButtonWithFrame(theButton,"exercise",theGallery,"exercise",renderer);
+                    renderButtonOutline(theButton["exercise"],2,renderer);
             }
 
             if(!theButton["pillE"].isMouseInButton()) renderButtonWithFrame(theButton,"pillE",theGallery,"pillE",renderer);
@@ -464,7 +464,7 @@ void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Sh
             if(theButton["fillBowl"].handleEvent(e)){theGame.fillBowl();}
             if(theButton["shovel"].handleEvent(e)){theGame.takeShit();}
             if(theButton["pet"].handleEvent(e)){theGame.pet();}
-            if(theButton["excercise"].handleEvent(e)){theGame.excercise();}
+            if(theButton["exercise"].handleEvent(e)){theGame.exercise();}
             if(theButton["pillE"].handleEvent(e)){theGame.pill(PILL_E);}
             if(theButton["pillP"].handleEvent(e)){theGame.pill(PILL_P);}
             if(theButton["pillQ"].handleEvent(e)){theGame.pill(PILL_Q);}
@@ -842,10 +842,10 @@ void renderCat(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theT
                 renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,2*32,1+32*2,31,31,gallery.getTexture("myCat"),renderer);
             }
         }
-        else if(theGame.getGameCat()==GAME_CAT_EXCERCISE)
+        else if(theGame.getGameCat()==GAME_CAT_EXERCISE)
         {
             framemax = 7;
-            if(frame==0) gallery.playChunk("excercise");
+            if(frame==0) gallery.playChunk("exercise");
             renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*11,31,31,gallery.getTexture("myCat"),renderer);
         }
         else if(theGame.getGameCat()==GAME_CAT_PILL)

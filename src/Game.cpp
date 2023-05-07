@@ -230,7 +230,7 @@ void Game::catMove()
         catSomething();
     }
     catPet();
-    catExcercise();
+    catExercise();
     catPill();
 }
 
@@ -294,19 +294,19 @@ void Game::catPet()
     }
 }
 
-void Game::excercise()
+void Game::exercise()
 {
     if(gCat == GAME_CAT_WAITING && !isMoving)
     {
         isMoving = true;
-        gCat = GAME_CAT_EXCERCISE;
+        gCat = GAME_CAT_EXERCISE;
         frametime = SDL_GetTicks();
     }
 }
 
-void Game::catExcercise()
+void Game::catExercise()
 {
-    if(isMoving && gCat==GAME_CAT_EXCERCISE)
+    if(isMoving && gCat==GAME_CAT_EXERCISE)
     {
         int timer = SDL_GetTicks();
         if(motionStop==0) {motionStop = timer;frame=0;}

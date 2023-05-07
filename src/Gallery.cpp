@@ -71,9 +71,9 @@ bool Gallery::loadGallery()
     if(pictures["pet"]==nullptr) return false;
     id.push_back("pet");
 
-    pictures["excercise"] = loadImage("img\\excercise.png");
-    if(pictures["excercise"]==nullptr) return false;
-    id.push_back("excercise");
+    pictures["exercise"] = loadImage("img\\exercise.png");
+    if(pictures["exercise"]==nullptr) return false;
+    id.push_back("exercise");
 
     pictures["shopBackground"] = loadImage("img\\shopBackground.png");
     if(pictures["shopBackground"]==nullptr) return false;
@@ -209,7 +209,7 @@ void Gallery::loadMusicsAndChunks()
     chunks["eating"]=Mix_LoadWAV("music\\eating.wav");
     chunkId.push_back("eating");
 
-    chunks["excercise"]=Mix_LoadWAV("music\\excercise.wav");
+    chunks["exercise"]=Mix_LoadWAV("music\\exercise.wav");
     chunkId.push_back("excercise");
 
     chunks["crying"]=Mix_LoadWAV("music\\crying.wav");

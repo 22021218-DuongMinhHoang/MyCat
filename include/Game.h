@@ -32,7 +32,7 @@ enum GAME_CAT
     GAME_CAT_DOSTH,
     GAME_CAT_GOTOSLEEP,
     GAME_CAT_PET,
-    GAME_CAT_EXCERCISE,
+    GAME_CAT_EXERCISE,
     GAME_CAT_PILL
 };
 
@@ -106,7 +106,7 @@ class Game
         void catPoo();
         void catWakeup(LTime theTime);
         void catPet();
-        void catExcercise();
+        void catExercise();
         void catPill();
         void catSomething();
         void catSick();
@@ -116,7 +116,7 @@ class Game
 
         //interact with cat
         void pet();
-        void excercise();
+        void exercise();
         void pill(PILL p);
         bool getIsSick(){return myCat.getIsSick();}
         void makingVid(LTime& theTime);
