@@ -465,11 +465,11 @@ void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Sh
             if(theButton["shovel"].handleEvent(e)){theGame.takeShit();}
             if(theButton["pet"].handleEvent(e)){theGame.pet();}
             if(theButton["exercise"].handleEvent(e)){theGame.exercise();}
-            if(theButton["pillE"].handleEvent(e)){theGame.pill(PILL_E);}
-            if(theButton["pillP"].handleEvent(e)){theGame.pill(PILL_P);}
-            if(theButton["pillQ"].handleEvent(e)){theGame.pill(PILL_Q);}
-            if(theButton["pillA"].handleEvent(e)){theGame.pill(PILL_A);}
-            if(theButton["pillPQA"].handleEvent(e)){theGame.pill(PILL_PQA);}
+            if(theButton["pillE"].handleEvent(e)){if(theGame.getPillE()>0) theGame.pill(PILL_E);}
+            if(theButton["pillP"].handleEvent(e)){if(theGame.getPillP()>0) theGame.pill(PILL_P);}
+            if(theButton["pillQ"].handleEvent(e)){if(theGame.getPillQ()>0) theGame.pill(PILL_Q);}
+            if(theButton["pillA"].handleEvent(e)){if(theGame.getPillA()>0) theGame.pill(PILL_A);}
+            if(theButton["pillPQA"].handleEvent(e)){if(theGame.getPillPQA()>0) theGame.pill(PILL_PQA);}
         }
         if(theGame.getPhoneApp()==PHONE_APP_SCREEN)
         {

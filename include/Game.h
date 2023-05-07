@@ -160,7 +160,6 @@ class Game
         CAT_DO getCatDo(){return catDo;}
         GAME_CAT getGameCat(){return gCat;}
 
-
         //shop
         bool isInShop()
         {

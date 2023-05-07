@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1683446627 source:d:\itne\game\mycat\src\texture.cpp
+1683468308 source:d:\itne\game\mycat\src\texture.cpp
 	"Texture.h"
 
 1683382407 d:\itne\game\mycat\include\texture.h
@@ -17,7 +17,7 @@
 
 1683434211 d:\itne\game\mycat\const.h
 
-1683434175 source:d:\itne\game\mycat\main.cpp
+1683468138 source:d:\itne\game\mycat\main.cpp
 	<iostream>
 	<iostream>
 	<string>
@@ -75,7 +75,7 @@
 1683446484 source:d:\itne\game\mycat\src\game.cpp
 	"Game.h"
 
-1683446459 d:\itne\game\mycat\include\game.h
+1683468138 d:\itne\game\mycat\include\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -119,7 +119,7 @@
 1682216911 source:d:\itne\game\mycat\src\cell.cpp
 	"Cell.h"
 
-1683429331 source:d:\itne\game\mycat\src\cat.cpp
+1683467834 source:d:\itne\game\mycat\src\cat.cpp
 	"Cat.h"
 
 1683432474 d:\itne\game\mycat\include\cat.h

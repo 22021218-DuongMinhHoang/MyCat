@@ -90,7 +90,7 @@ void Cat::drinkPill(PILL p)
 
         case PILL_PQA:
         {
-            mHealth+=25;
+            mHealth+=400;
             sickA=false;
             sickP=false;
             sickQ=false;

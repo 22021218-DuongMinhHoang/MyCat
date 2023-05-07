@@ -65,6 +65,9 @@ int main(int argc, char* argv[])
                         case SDLK_RIGHT:
                             theTime.skip(30);
                             break;
+                        case SDLK_UP:
+                            theGame.moreMoney(10);
+                            break;
                         }
                     }
                     if(again.handleEvent(&e)&&theGame.getGameState()==GAME_STATE_OVER) {quit=true;out=false;}
