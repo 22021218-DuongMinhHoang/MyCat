@@ -13,14 +13,14 @@
 - Mèo: có 6 thuộc tính: Age, Full, Poo, Health, Love, Sick. Trong đó người chơi không thể biết Full, Poo và loại bệnh mèo đang mắc phải.
   - Age: là tuổi của mèo, tính từ lúc mới nuôi là 0, Age tăng lên 1 mỗi 2 ngày.
   - Full: là độ no của mèo, Full giảm đến 1 mức thì mèo sẽ đói và tự động đến chỗ ăn.
-  - Poo: là độ buồn đi vệ sinh cảu mèo, Poo sẽ tăng sau khi mèo ăn xong và khi đến 1 mức nào đó thì mèo sẽ tự động đi đến hộp cát để đi vệ sinh, lúc đo Poo sẽ về 0.
+  - Poo: là độ buồn đi vệ sinh cảu mèo, Poo sẽ tăng sau khi mèo ăn xong và khi đến 1 mức nào đó thì mèo sẽ tự động đi đến hộp cát để đi vệ sinh, lúc đó Poo sẽ về 0.
   - Health: là sức khỏe của mèo, Health có thể tăng khi ăn, khi đi vệ sinh, khi tập thể dục, khi Health của mèo giảm dưới 0, mèo chết, Game Over.
   - Love: là mức độ yêu mến của mèo với chủ, Love có thể tăng khi ăn, khi vuốt ve.
   - Sick: là bệnh mèo mắc phải, khi không có bệnh thì Sick là No, khi mèo mắc bệnh Sick là Yes, có 3 loại bệnh: Hunger, Diarrhea, Alpha.
-      - Khi Yes: Health của mèo sẽ giảm từ từ.
-      - Hunger: là bệnh đói, Full sẽ giảm nhanh làm Mèo thấy đói nhanh.
-      - Diarrhea: là tiêu chảy, Poo sẽ tăng nhanh làm mèo đi vệ sinh liên tục.
-      - Alpha: là virus, Health của mèo sẽ tụt nhanh. 
+    - Khi Yes: Health của mèo sẽ giảm từ từ.
+    - Hunger: là bệnh đói, Full sẽ giảm nhanh làm Mèo thấy đói nhanh.
+    - Diarrhea: là tiêu chảy, Poo sẽ tăng nhanh làm mèo đi vệ sinh liên tục.
+    - Alpha: là virus, Health của mèo sẽ tụt nhanh. 
 - Màn hình game có 4 phần: Note, Place, Phone, Interact.
 - Note: hiện lên ghi chú về lượng đồ mà người chơi đang có và ngày trôi qua: Day, Money, CatFood, 5 loại Pill.
   - Day: số ngày trôi qua kể từ khi nuôi mèo.
@@ -43,11 +43,11 @@
   - MeoTips: thể hiện các mẹo khi nuôi mèo.
   - ZooTube: nền tảng video lớn nhất thế giới động vật, có thể đăng video mèo lên đó để kiếm thêm chút tiền.
   - Map: giúp người chơi di chuyển qua các Place.
-- Interact: người chơi tương tác với mèo, có 9 loại tương tác: FillBowl, CleanLitterBox, Pet, Excerise và 5 loại DrinkPill.
+- Interact: người chơi tương tác với mèo, có 9 loại tương tác: FillBowl, CleanLitterBox, Pet, Exercise và 5 loại DrinkPill.
   - FillBowl: đổ đầy vào bát thức ăn cho mèo, -1 CatFood.
   - CleanLitterBox: làm sạch hộp cát mèo.
   - Pet: vuốt ve mèo.
-  - Excercise: giúp mèo tập thể dục.
+  - Exercise: giúp mèo tập thể dục.
   - DrinkPill: uống 1 trong 5 loại thuốc, nếu uống loại thuốc không phù hợp với bệnh đang mắc, Health sẽ giảm.
 - ZooTube đóng trước 21:00, các Place sẽ đóng trước 22:00, mèo sẽ đi ngủ lúc 22:00, nhân vật người chơi đi ngủ lúc 23:00, ngày mới bắt đầu lúc 6:00.
 - GameOver khi Health nhỏ hơn 0: hiện lên Love, Age và lời nhắn của mèo tới người chơi. 
