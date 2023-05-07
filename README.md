@@ -8,7 +8,7 @@
 - Tên: MyCat
 - Tổng quát: Người chơi mới nuôi một chú mèo, điều cần làm bây giờ là chăm sóc người bạn mới thật tốt.
 - Thể loại game: Point & Click.
-- Các tính năng: mèo sẽ di chuyển khắp nơi trong phòng, mèo cũng có thể làm trò, người chơi có thể tương tác với mèo, mua đồ, các hoạt động cần thiết đẻ nuôi mèo, có hình ảnh và âm thanh tương ứng với các hành động, có thể chơi lại.
+- Các tính năng: mèo sẽ di chuyển khắp nơi trong phòng, mèo cũng có thể làm trò, người chơi có thể tương tác với mèo, mua đồ, các hoạt động cần thiết để nuôi mèo, có hình ảnh và âm thanh tương ứng với các hành động, có thể chơi lại.
 ## Hướng dẫn chơi:
 - Mèo: có 6 thuộc tính: Age, Full, Poo, Health, Love, Sick. Trong đó người chơi không thể biết Full, Poo và loại bệnh mèo đang mắc phải.
   - Age: là tuổi của mèo, tính từ lúc mới nuôi là 0, Age tăng lên 1 mỗi 2 ngày.
