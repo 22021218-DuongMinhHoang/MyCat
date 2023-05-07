@@ -31,7 +31,7 @@ void setTexts(map<string,Text>& theText,SDL_Renderer* renderer);
 
 void freeTexts(map<string,Text>& theText);
 
-void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Shop& theShop,LTime& theTime);
+void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Shop& theShop,LTime& theTime,Gallery gallery);
 
 void renderButton(map<string,Button>& theButton,string buttonName,Gallery& theGallery,string picName,SDL_Renderer* renderer);
 

@@ -79,6 +79,9 @@ void Game::catGoToCell()
                 frametime = SDL_GetTicks();
                 myCat.setCatMove(CAT_MOVE_SLEEP);
                 break;
+            default:
+                break;
+
             }
         }
     }
@@ -207,9 +210,11 @@ void Game::catMove()
             isMoving = true;
             frametime = SDL_GetTicks();
             break;
+        default:
+            break;
         }
     }
-    else if(timer - lastMove >= 10000 && gCat == GAME_CAT_WAITING && !isMoving && myCat.getHealth()>=30)
+    else if(timer - lastMove >= 5000 && gCat == GAME_CAT_WAITING && !isMoving && myCat.getHealth()>=30)
     {
         int chance = randomNumber(1,10);
         if(chance<=5)
@@ -389,7 +394,7 @@ void Game::catStart(LTime& theTime)
         if(theTime.getHourValue()>=6&&theTime.getHourValue()<18) gTime=GAME_TIME_DAY;
         else if(theTime.getHourValue()>=18&&theTime.getHourValue()<23) gTime=GAME_TIME_NIGHT;
         else gTime = GAME_TIME_SLEEP;
-        if(theTime.getHourValue()==23&&theTime.getMinuteValue()>=58) transition=true;
+        if(theTime.getHourValue()==22&&theTime.getMinuteValue()>=58) {transition=true;theTime.skip(60);}
         if(myCat.getHealth()<0)
         {
             transition=true;
@@ -420,6 +425,8 @@ void Game::openApp(PHONE_APP ap)
             break;
         case PHONE_APP_MAP:
             gPhone = PHONE_APP_MAP;
+            break;
+        default:
             break;
         }
     }
@@ -474,12 +481,13 @@ void Game::goToShop(LTime& theTime)
 
 void Game::goToWork(LTime& theTime)
 {
-    if(gPlace!=GAME_PLACE_WORK && ((theTime.getHourValue()>=8&&theTime.getHourValue()<=9) || (theTime.getHourValue()>=14&&theTime.getHourValue()<=15)))
+    if(gPlace!=GAME_PLACE_WORK && ((theTime.getHourValue()>=8&&theTime.getHourValue()<9) || (theTime.getHourValue()>=14&&theTime.getHourValue()<15)))
     {
         isMoving = false;
         gCat = GAME_CAT_WAITING;
         Astar.resetAlgorithm();
         motionStop=0;
+        frame=0;
         gPlace = GAME_PLACE_WORK;
         if(bowlIsFull)
         {
@@ -513,7 +521,7 @@ void Game::goToWork(LTime& theTime)
 
 void Game::goToVet(LTime& theTime)
 {
-    if(gPlace!=GAME_PLACE_VET && theTime.getHourValue()<21 && money >= 200)
+    if(gPlace!=GAME_PLACE_VET && theTime.getHourValue()<22 && money >= 200)
     {
         isMoving = false;
         gCat = GAME_CAT_WAITING;
@@ -623,7 +631,7 @@ void Game::atVet(LTime& theTime)
 
 void Game::makingVid(LTime& theTime)
 {
-    if(theTime.getHourValue()>=23) canMakeVid = false;
+    if(theTime.getHourValue()>21) canMakeVid = false;
     if(gPhone==PHONE_APP_ZOOTUBE)
     {
         int timer = SDL_GetTicks();
@@ -648,7 +656,7 @@ void Game::catSick()
         {
             myCat.moreHealth(-1);
             if(myCat.getSickP()) myCat.moreFull(-5);
-            if(myCat.getSickQ()) myCat.morePoo(5);
+            if(myCat.getSickQ()) myCat.morePoo(2);
             if(myCat.getSickA()) myCat.moreHealth(-2);
             timeSick = timer;
         }
@@ -692,6 +700,8 @@ void Game::changeScene(LTime& theTime)
             case GO_TO_END:
                 gTo=GO_TO_NONE;
                 setGameState(GAME_STATE_OVER);
+                break;
+            default:
                 break;
             }
         }

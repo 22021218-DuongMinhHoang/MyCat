@@ -3,7 +3,7 @@
 bool init(SDL_Window* &window, SDL_Renderer* &renderer,int screenWidth, int screenHeight, const char* windowTitle)
 {
     bool success = true;
-    if(SDL_Init(SDL_INIT_VIDEO)<0)
+    if(SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO ) < 0)
     {
         cout << "init error SDL_ERROR: " << SDL_GetError();
         success = false;
@@ -38,6 +38,11 @@ bool init(SDL_Window* &window, SDL_Renderer* &renderer,int screenWidth, int scre
                     cout << "could not init TTF error: " << TTF_GetError();
                     success = false;
                 }
+                if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+                {
+                    printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+                    success = false;
+                }
             }
         }
     }
@@ -51,6 +56,7 @@ void close(SDL_Window* window, SDL_Renderer* renderer)
 	TTF_Quit();
     SDL_Quit();
     IMG_Quit();
+    Mix_Quit();
     window = nullptr;
     renderer = nullptr;
 }
@@ -234,6 +240,8 @@ void renderGameOver(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,map<st
 {
     if(theGame.getGameState()==GAME_STATE_OVER)
     {
+
+        if(theGame.frame==0) { gallery.playChunk("crying"); Mix_HaltMusic();}
         theGame.letter=false;
         if(theGame.frame>5) {theGame.frame=6;theGame.letter=true;}
         renderTexturefromTexture(0,0,SCREEN_WIDTH+1,SCREEN_HEIGHT+5,1365*(theGame.frame%6),0,1365,764,gallery.getTexture("gameOver"),renderer);
@@ -256,7 +264,7 @@ void renderGameOver(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,map<st
 
             theText["loveLetter"].setText("Thank you");
             if(theGame.getCatLove()<=0) theText["loveLetter"].setText("I hate you");
-            else if(theGame.getCatLove()<=10) theText["loveLetter"].setText("Thank you");
+            else if(theGame.getCatLove()<=100) theText["loveLetter"].setText("Thank you");
             else theText["loveLetter"].setText("I love you");
             renderTexture(17*30,10*30,12*30,2*30,theText["loveLetter"].getText(),renderer);
 
@@ -424,7 +432,7 @@ void renderAllButton(map<string,Button>& theButton,Game& theGame,Gallery& theGal
     }
 }
 
-void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Shop& theShop,LTime& theTime)
+void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Shop& theShop,LTime& theTime,Gallery gallery)
 {
     if(theGame.getGameState()==GAME_STATE_MENU)
     {
@@ -434,6 +442,8 @@ void handleAllButton(map<string,Button>& theButton,SDL_Event* e,Game& theGame,Sh
             theGame.letGo=true;
             theGame.transition=true;
             theGame.transTime=SDL_GetTicks();
+            gallery.playMusic("theme");
+            Mix_VolumeMusic(50);
         }
     }
     else if(theGame.getGameState()==GAME_STATE_PLAY)
@@ -603,6 +613,7 @@ void renderWork(Game& theGame,Gallery& gallery,SDL_Renderer* renderer)
     int timer = SDL_GetTicks();
     if(theGame.getGamePlace()==GAME_PLACE_WORK)
     {
+        if(theGame.frame==0) gallery.playChunk("working");
         if(timer - theGame.frametime>=500)
         {
             theGame.frame++;
@@ -617,6 +628,8 @@ void renderVet(Game& theGame,Gallery& gallery,SDL_Renderer* renderer)
     int timer = SDL_GetTicks();
     if(theGame.getGamePlace()==GAME_PLACE_VET)
     {
+        if(theGame.frame==1) gallery.playChunk("angry");
+
         if(timer - theGame.frametime>=1250)
         {
             theGame.frame++;
@@ -647,12 +660,13 @@ void renderPhone(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& th
     {
         renderTexture(0,SCREEN_HEIGHT-600,322,500,gallery.getTexture("openZooTube"),renderer);
         int timer = SDL_GetTicks();
+        if(theGame.vidFrame==0) {gallery.playChunk("happi");Mix_Volume(0,25);}
         if(timer - theGame.vidFrameTime>=200)
         {
             theGame.vidFrame++;
             theGame.vidFrameTime=timer;
         }
-        renderTexturefromTexture(FLOOR_X,0,HOUSE_WIDTH,SCREEN_HEIGHT,(theGame.vidFrame%3)*760,0,760,SCREEN_HEIGHT,gallery.getTexture("makingVideo"),renderer);
+        renderTexturefromTexture(FLOOR_X,0,HOUSE_WIDTH,SCREEN_HEIGHT,(theGame.vidFrame%2)*760,0,760,SCREEN_HEIGHT,gallery.getTexture("makingVideo"),renderer);
     }
     else if(theGame.getPhoneApp()==PHONE_APP_MEOTIP)
     {
@@ -715,136 +729,157 @@ void renderCat(Game& theGame,Gallery& gallery,SDL_Renderer* renderer,LTime& theT
 {
     int framemax = 3,frame = theGame.frame;
     SDL_Point catPos = theGame.getCatPos();
-    if(theGame.getCatMove()==CAT_MOVE_WALK)
+    if(theGame.getCatHealth()>=0)
     {
-        framemax = 3;
-        switch(theGame.getCatDirection())
+        if(theGame.getCatMove()==CAT_MOVE_WALK)
         {
+            framemax = 3;
+            switch(theGame.getCatDirection())
+            {
+                case DIRECTION_UP:
+                    renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1,31,31,gallery.getTexture("myCat"),renderer);
+                    break;
+                case DIRECTION_DOWN:
+                    renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0*32+frame*32,1,31,31,gallery.getTexture("myCat"),renderer);
+                    break;
+                case DIRECTION_LEFT:
+                    renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0*32+frame*32,1+32,31,31,gallery.getTexture("myCat"),renderer);
+                    break;
+                case DIRECTION_RIGHT:
+                    renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1+32,31,31,gallery.getTexture("myCat"),renderer);
+                    break;
+            }
+        }
+        if(theGame.getCatMove()==CAT_MOVE_JUMP)
+        {
+            framemax = 3;
+            switch(theGame.getCatDirection())
+            {
             case DIRECTION_UP:
-                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1,31,31,gallery.getTexture("myCat"),renderer);
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1+8*32,31,31,gallery.getTexture("myCat"),renderer);
                 break;
             case DIRECTION_DOWN:
-                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0*32+frame*32,1,31,31,gallery.getTexture("myCat"),renderer);
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1+9*32,31,31,gallery.getTexture("myCat"),renderer);
                 break;
             case DIRECTION_LEFT:
-                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0*32+frame*32,1+32,31,31,gallery.getTexture("myCat"),renderer);
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+9*32,31,31,gallery.getTexture("myCat"),renderer);
                 break;
             case DIRECTION_RIGHT:
-                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1+32,31,31,gallery.getTexture("myCat"),renderer);
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+8*32,31,31,gallery.getTexture("myCat"),renderer);
                 break;
+            }
         }
-    }
-    if(theGame.getCatMove()==CAT_MOVE_JUMP)
-    {
-        framemax = 3;
-        switch(theGame.getCatDirection())
+        else if(theGame.getCatMove()==CAT_MOVE_EAT)
         {
-        case DIRECTION_UP:
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1+8*32,31,31,gallery.getTexture("myCat"),renderer);
-            break;
-        case DIRECTION_DOWN:
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,4*32+frame*32,1+9*32,31,31,gallery.getTexture("myCat"),renderer);
-            break;
-        case DIRECTION_LEFT:
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+9*32,31,31,gallery.getTexture("myCat"),renderer);
-            break;
-        case DIRECTION_RIGHT:
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+8*32,31,31,gallery.getTexture("myCat"),renderer);
-            break;
+            framemax = 7;
+            if(theGame.getBowlIsFull())
+            {
+                if(frame==0) gallery.playChunk("eating");
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*5,31,31,gallery.getTexture("myCat"),renderer);
+            }
+            else renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0,5*32+1,31,31,gallery.getTexture("myCat"),renderer);
+            SDL_Point p = theGame.getCellPos(CELL_FOOD);
+            if(theGame.getBowlIsFull()) {renderTexture(p.x - CELL_SIZE/4 - 10,p.y + CELL_SIZE/16+6,60,30,gallery.getTexture("catbowlfull"),renderer);}
+            else renderTexture(p.x - CELL_SIZE/4 - 10,p.y + CELL_SIZE/16+6,60,30,gallery.getTexture("catbowl"),renderer);
         }
-    }
-    else if(theGame.getCatMove()==CAT_MOVE_EAT)
-    {
-        framemax = 7;
-        if(theGame.getBowlIsFull())
+        else if(theGame.getCatMove()==CAT_MOVE_POO)
         {
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*5,31,31,gallery.getTexture("myCat"),renderer);
+            if(frame==2) gallery.playChunk("poo");
+            framemax = 7;
+            if(theGame.getShit()<=5)
+            {
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*2,31,31,gallery.getTexture("myCat"),renderer);
+            }
+            else
+            {
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,2*32,1+32*2,31,31,gallery.getTexture("myCat"),renderer);
+            }
         }
-        else renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0,5*32+1,31,31,gallery.getTexture("myCat"),renderer);
-        SDL_Point p = theGame.getCellPos(CELL_FOOD);
-        if(theGame.getBowlIsFull()) {renderTexture(p.x - CELL_SIZE/4 - 10,p.y + CELL_SIZE/16+6,60,30,gallery.getTexture("catbowlfull"),renderer);}
-        else renderTexture(p.x - CELL_SIZE/4 - 10,p.y + CELL_SIZE/16+6,60,30,gallery.getTexture("catbowl"),renderer);
-    }
-    else if(theGame.getCatMove()==CAT_MOVE_POO)
-    {
-        framemax = 7;
-        if(theGame.getShit()<=5)
+        else if(theGame.getGameCat()==GAME_CAT_DOSTH)
         {
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*2,31,31,gallery.getTexture("myCat"),renderer);
+            if(frame==0) gallery.playChunk("meow");
+            framemax = 7;
+            switch(theGame.getCatDo())
+            {
+            case CAT_DO_LICK:
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*4,31,31,gallery.getTexture("myCat"),renderer);
+                break;
+            case CAT_DO_LIEDOWN:
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*6,31,31,gallery.getTexture("myCat"),renderer);
+                break;
+            case CAT_DO_MYDIEU:
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*3,31,31,gallery.getTexture("myCat"),renderer);
+                break;
+            case CAT_DO_OTHER:
+                break;
+            }
+        }
+        else if(theGame.getCatMove()==CAT_MOVE_SLEEP)
+        {
+            framemax = 7;
+            if(theTime.getHourValue()>=0 && theTime.getHourValue()<22)
+            {
+                theGame.frame=7;
+                theGame.catWakeup(theTime);
+            }
+            if(frame>=5&&frame<7) theGame.frame=5;
+            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*7,31,31,gallery.getTexture("myCat"),renderer);
+        }
+        else if(theGame.getGameCat()==GAME_CAT_PET)
+        {
+            framemax = 7;
+
+            if(theGame.getNumPet()<=3)
+            {
+                if(frame==0) gallery.playChunk("meow");
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*10,31,31,gallery.getTexture("myCat"),renderer);
+            }
+            else
+            {
+                if(frame==0) gallery.playChunk("poo");
+                renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,2*32,1+32*2,31,31,gallery.getTexture("myCat"),renderer);
+            }
+        }
+        else if(theGame.getGameCat()==GAME_CAT_EXCERCISE)
+        {
+            framemax = 7;
+            if(frame==0) gallery.playChunk("excercise");
+            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*11,31,31,gallery.getTexture("myCat"),renderer);
+        }
+        else if(theGame.getGameCat()==GAME_CAT_PILL)
+        {
+            if(theGame.frame==2) {gallery.playChunk("heal");Mix_Volume(0,25);}
+            framemax = 7;
+            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*12,31,31,gallery.getTexture("myCat"),renderer);
+        }
+        if(theGame.getIsMoving())
+        {
+            int fratime = SDL_GetTicks();
+            if(fratime - theGame.frametime>300)
+            {
+                theGame.frame++;
+                if(theGame.frame>framemax) theGame.frame=0;
+                theGame.frametime=fratime;
+            }
         }
         else
         {
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,2*32,1+32*2,31,31,gallery.getTexture("myCat"),renderer);
+            theGame.frame=0;
+            framemax = 3;
+            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0,3*32+1,31,31,gallery.getTexture("myCat"),renderer);
         }
-    }
-    else if(theGame.getGameCat()==GAME_CAT_DOSTH)
-    {
-        framemax = 7;
-        switch(theGame.getCatDo())
+        if(theGame.gTime==GAME_TIME_SLEEP)
         {
-        case CAT_DO_LICK:
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*4,31,31,gallery.getTexture("myCat"),renderer);
-            break;
-        case CAT_DO_LIEDOWN:
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*6,31,31,gallery.getTexture("myCat"),renderer);
-            break;
-        case CAT_DO_MYDIEU:
-            renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*3,31,31,gallery.getTexture("myCat"),renderer);
-            break;
-        case CAT_DO_OTHER:
-            break;
+            SDL_Point catp=theGame.getCatPos();
+            SDL_Rect blackcat={catp.x-40,catp.y-40,80,80};
+            SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer,78,76,71,50);
+            SDL_RenderFillRect(renderer,&blackcat);
         }
     }
-    else if(theGame.getCatMove()==CAT_MOVE_SLEEP)
+    if(theGame.getCatHealth()<0)
     {
-        framemax = 7;
-        if(theTime.getHourValue()>=0 && theTime.getHourValue()<22)
-        {
-            theGame.frame=7;
-            theGame.catWakeup(theTime);
-        }
-        if(frame>=5&&frame<7) theGame.frame=5;
-        renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*7,31,31,gallery.getTexture("myCat"),renderer);
-    }
-    else if(theGame.getGameCat()==GAME_CAT_PET)
-    {
-        framemax = 7;
-        if(theGame.getNumPet()<=3) renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*10,31,31,gallery.getTexture("myCat"),renderer);
-        else renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,2*32,1+32*2,31,31,gallery.getTexture("myCat"),renderer);
-    }
-    else if(theGame.getGameCat()==GAME_CAT_EXCERCISE)
-    {
-        framemax = 7;
-        renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*11,31,31,gallery.getTexture("myCat"),renderer);
-    }
-    else if(theGame.getGameCat()==GAME_CAT_PILL)
-    {
-        framemax = 7;
-        renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,frame*32,1+32*12,31,31,gallery.getTexture("myCat"),renderer);
-    }
-    if(theGame.getIsMoving())
-    {
-        int fratime = SDL_GetTicks();
-        if(fratime - theGame.frametime>300)
-        {
-            theGame.frame++;
-            if(theGame.frame>framemax) theGame.frame=0;
-            theGame.frametime=fratime;
-        }
-    }
-    else
-    {
-        theGame.frame=0;
-        framemax = 3;
-        renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,0,3*32+1,31,31,gallery.getTexture("myCat"),renderer);
-    }
-    if(theGame.gTime==GAME_TIME_SLEEP)
-    {
-        SDL_Point catp=theGame.getCatPos();
-        SDL_Rect blackcat={catp.x-40,catp.y-40,80,80};
-        SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
-        SDL_SetRenderDrawColor(renderer,78,76,71,50);
-        SDL_RenderFillRect(renderer,&blackcat);
+        renderTexturefromTexture(catPos.x-CAT_SIZE/2,catPos.y-CAT_SIZE/2-30,CAT_SIZE,CAT_SIZE,7*32,6*32+1,31,31,gallery.getTexture("myCat"),renderer);
     }
 }
 

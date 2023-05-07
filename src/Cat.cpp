@@ -15,17 +15,17 @@ void Cat::getSick()
     int chanceP = randomNumber(1,100);
     int chanceQ = randomNumber(1,100);
     int chanceA = randomNumber(1,100);
-    if(chanceP <= 5 + mAge*20)
+    if(chanceP <= 5 + mAge*20 - mHealth/20)
     {
         isSick = true;
         sickP = true;
     }
-    if(chanceQ <= 5 + mAge*20)
+    if(chanceQ <= 5 + mAge*20 - mHealth/20)
     {
         isSick = true;
         sickQ = true;
     }
-    if(chanceA <= 5 + mAge*20)
+    if(chanceA <= 5 + mAge*20 - mHealth/20)
     {
         isSick = true;
         sickA = true;

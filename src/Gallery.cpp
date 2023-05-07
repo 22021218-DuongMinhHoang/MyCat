@@ -9,7 +9,8 @@ Gallery::Gallery(SDL_Renderer* _renderer)
 Gallery::~Gallery()
 {
     //dtor
-    freeImg();
+//    freeImg();
+//    freeChunksAndMusics();
 }
 
 SDL_Texture* Gallery::loadImage(string path)
@@ -197,5 +198,70 @@ void Gallery::freeImg()
     {
         SDL_DestroyTexture(pictures[id[i]]);
         pictures[id[i]] = nullptr;
+    }
+}
+
+void Gallery::loadMusicsAndChunks()
+{
+    chunks["meow"]=Mix_LoadWAV("meow.wav");
+    chunkId.push_back("meow");
+
+    chunks["eating"]=Mix_LoadWAV("eating.wav");
+    chunkId.push_back("eating");
+
+    chunks["excercise"]=Mix_LoadWAV("excercise.wav");
+    chunkId.push_back("excercise");
+
+    chunks["crying"]=Mix_LoadWAV("crying.wav");
+    chunkId.push_back("crying");
+
+    chunks["happi"]=Mix_LoadWAV("happi.wav");
+    chunkId.push_back("happi");
+
+    chunks["poo"]=Mix_LoadWAV("poo.wav");
+    chunkId.push_back("poo");
+
+    chunks["angry"]=Mix_LoadWAV("angry.wav");
+    chunkId.push_back("angry");
+
+    chunks["heal"]=Mix_LoadWAV("heal.wav");
+    chunkId.push_back("heal");
+
+    chunks["working"]=Mix_LoadWAV("working.wav");
+    chunkId.push_back("working");
+
+    musics["theme"]=Mix_LoadMUS("myCatTheme.wav");
+    musicId.push_back("theme");
+}
+
+void Gallery::playChunk(string name)
+{
+    if(Mix_Playing(-1)==0) Mix_PlayChannel(-1,chunks[name],0);
+}
+
+void Gallery::playChunk(string name,int loop)
+{
+    if(Mix_Playing(-1)==0) Mix_PlayChannel(-1,chunks[name],loop);
+}
+
+void Gallery::playMusic(string name)
+{
+    Mix_PlayMusic(musics[name],-1);
+}
+
+void Gallery::freeChunksAndMusics()
+{
+    int chunksNum = chunkId.size();
+    for(int i=0;i<chunksNum;i++)
+    {
+        Mix_FreeChunk(chunks[chunkId[i]]);
+        chunks[chunkId[i]] = nullptr;
+    }
+
+    int musicsNum = musicId.size();
+    for(int i=0;i<musicsNum;i++)
+    {
+        Mix_FreeMusic(musics[musicId[i]]);
+        musics[musicId[i]] = nullptr;
     }
 }
