@@ -55,7 +55,7 @@
 - Sử dụng thư viện SDL, SDL_image, SDL_ttf, SDL_mixer.
 - Áp dụng thuật toán A* để mèo tìm đường đi ngắn nhất tới nơi mà nó muốn.
 - Kĩ thuật tách file.
-## Đánh giá chủ quan:
+## Kết luận:
 - Tích cực: game khá dễ thương, hình ảnh và âm thanh vui nhộn.
 - Tiêu cực: game có nhiều chức năng cần lưu ý, nếu đã nắm bắt được rồi lại cảm thấy khá nhàm, con mèo chạy nhảy linh tinh có thể gây khó chịu.
 - Kinh nghiệm và bài học rút ra:
