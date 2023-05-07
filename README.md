@@ -62,3 +62,6 @@
   - Học được cách tách file, cách dùng SDL và cách dùng GitHub.
   - Rút ra kinh nghiệm quản lí và sắp xếp thời gian, xây dựng kế hoạch.
   - Rèn luyện được khả năng tự học, tự tìm hiểu và khả năng lập trình.
+## Nguồn tham khảo:
+- LazyFoo: https://lazyfoo.net/tutorials/SDL/
+- Thuật toán A*: https://www.iostream.vn/giai-thuat-lap-trinh/thuat-giai-a-DVnHj
