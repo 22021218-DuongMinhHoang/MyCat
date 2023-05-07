@@ -18,6 +18,4 @@ const int FLOOR_Y = WALL_HEIGHT;
 const int NUM_OF_CELL_X = HOUSE_WIDTH/CELL_SIZE;
 const int NUM_OF_CELL_Y = FLOOR_HEIGHT/CELL_SIZE;
 
-
-
 #endif // CONST_H_INCLUDED

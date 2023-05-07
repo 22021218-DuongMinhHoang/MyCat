@@ -10,7 +10,6 @@
 #include "Texture.h"
 #include "Button.h"
 #include "Text.h"
-
 #include "LTime.h"
 #include "Game.h"
 #include "Shop.h"
@@ -23,11 +22,10 @@ int main(int argc, char* argv[])
     srand(time(0));
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
-    //play again
-    Button again(17*30,13*30,4*30,3*30);
-    //quit game
-    Button getOut(25*30,13*30,4*30,3*30);
 
+    Button again(17*30,13*30,4*30,3*30);//play again
+
+    Button getOut(25*30,13*30,4*30,3*30);//quit game
 
     if(!init(window,renderer,SCREEN_WIDTH,SCREEN_HEIGHT,WINDOW_TITLE))
     {
@@ -38,17 +36,18 @@ int main(int argc, char* argv[])
         bool out = false; //for play again
         while(!out)
         {
-            int fps=0;
-            Gallery gallery(renderer);
             SDL_Event e;
             bool quit = false;
+
             map<string,Button> theButton;
             setButtons(theButton);
             map<string,Text> theText;
             setTexts(theText,renderer);
+            Gallery gallery(renderer);
             Shop theShop;
             LTime theTime;
             Game theGame;
+
             while(!quit)
             {
                 SDL_SetRenderDrawColor(renderer,255,200,40,255);
@@ -74,8 +73,6 @@ int main(int argc, char* argv[])
                 }
                 renderEveryThing(theGame,gallery,renderer,theTime,theButton,theText,theShop,again,getOut);
                 SDL_RenderPresent(renderer);
-                fps++;
-                if(SDL_GetTicks()/1000!=0) cout<<fps/(SDL_GetTicks()/1000)<<endl;
             }
             freeTexts(theText);
             SDL_RenderClear(renderer);
@@ -83,6 +80,5 @@ int main(int argc, char* argv[])
         }
         close(window,renderer);
     }
-    cout<<"end"<<endl;
     return 0;
 }
