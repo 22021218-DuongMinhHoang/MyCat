@@ -59,6 +59,6 @@
 - Tích cực: game khá dễ thương, hình ảnh và âm thanh vui nhộn.
 - Tiêu cực: game có nhiều chức năng cần lưu ý, nếu đã nắm bắt được rồi lại cảm thấy khá nhàm, con mèo chạy nhảy linh tinh có thể gây khó chịu.
 - Kinh nghiệm và bài học rút ra:
-  - Học được cách tách file, cách dùng SDL.
+  - Học được cách tách file, cách dùng SDL và cách dùng GitHub.
   - Rút ra kinh nghiệm quản lí và sắp xếp thời gian, xây dựng kế hoạch.
   - Rèn luyện được khả năng tự học, tự tìm hiểu.
