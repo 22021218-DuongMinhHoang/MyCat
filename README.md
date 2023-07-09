@@ -65,3 +65,5 @@
 ## Nguồn tham khảo:
 - LazyFoo: https://lazyfoo.net/tutorials/SDL/
 - Thuật toán A*: https://www.iostream.vn/giai-thuat-lap-trinh/thuat-giai-a-DVnHj
+## Video: 
+https://youtu.be/JCBo-WjGIyE
